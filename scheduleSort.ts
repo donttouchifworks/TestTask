@@ -16,8 +16,9 @@ export default function findOptimalSchedule(tasks: Array<Array<string>>, schedul
             start: new Date(tasks[i][0]).getTime(),
             end: new Date(tasks[i][1]).getTime(),
         }
-
-        if(currentTask && isScheduleRestrictions(currentTask, startTime, endTime)) continue
+        if(currentTask && isScheduleRestrictions(currentTask, startTime, endTime)) {
+            continue
+        }
         if(currentTask.start > endTime) break
 
 
@@ -62,7 +63,6 @@ export default function findOptimalSchedule(tasks: Array<Array<string>>, schedul
 }
 
 function countTotalTime(tasks: Array<Array<string>>, shiftEnd: number, total: number){
-
     const time = tasks.reduce((acc: number, currentValue) => {
         if (new Date(currentValue[0]).getTime() < shiftEnd) {
             return acc + new Date(currentValue[1]).getTime() - new Date(currentValue[0]).getTime()
@@ -70,7 +70,7 @@ function countTotalTime(tasks: Array<Array<string>>, shiftEnd: number, total: nu
         return acc
     }, 0)
 
-    return time - total
+    return time
 }
 
 function isScheduleRestrictions(task: task, startTime: number, endTime: number){

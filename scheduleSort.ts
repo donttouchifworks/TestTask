@@ -29,11 +29,12 @@ export default function findOptimalSchedule(tasks: Array<Array<string>>, schedul
             }
         }
 
-
+        //no conflicts first
         if(optimalSchedule.length === 0 && nextTask && nextTask.start > currentTask.end ){
             optimalSchedule.push(tasks[i])
             continue
         }
+
         let prevTask;
         if(optimalSchedule.length > 0){
             prevTask = {
@@ -42,16 +43,17 @@ export default function findOptimalSchedule(tasks: Array<Array<string>>, schedul
             }
         }
 
-        if(prevTask && prevTask.end > currentTask.start) continue
 
-        if(nextTask && nextTask.start < currentTask.end ){
-            const a= tasks.slice(i)
-            a.splice(1,1)
-            const first = countTotalTime(a, endTime, totalTime)
-            const second = countTotalTime( tasks.slice(i+1),endTime, totalTime)
-            optimalSchedule.push(first > second ? tasks[i]: tasks[i+1])
-        } else{
+        if(prevTask && (prevTask.end > currentTask.start) || prevTask && prevTask.end > currentTask.start) continue
+
+        if (!(nextTask && nextTask.start < currentTask.end || nextTask && nextTask.start == currentTask.start)) {
             optimalSchedule.push(tasks[i])
+        } else {
+            const a = tasks.slice(i)
+            a.splice(1, 1)
+            const first = countTotalTime(a, endTime, totalTime)
+            const second = countTotalTime(tasks.slice(i + 1), endTime, totalTime)
+            if(first > second) optimalSchedule.push(tasks[i])
         }
 
     }
@@ -68,7 +70,7 @@ function countTotalTime(tasks: Array<Array<string>>, shiftEnd: number, total: nu
         return acc
     }, 0)
 
-    return time
+    return time - total
 }
 
 function isScheduleRestrictions(task: task, startTime: number, endTime: number){

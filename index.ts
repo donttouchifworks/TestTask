@@ -10,4 +10,5 @@ const tasks = [
 ]
 const schedule = ['2022-01-01 09:00:00', '2022-01-01 18:00:00'];
 
-console.log(findOptimalSchedule(tasks, schedule))
+const res = findOptimalSchedule(tasks, schedule)
+console.log()

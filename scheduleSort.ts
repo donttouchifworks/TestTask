@@ -62,14 +62,12 @@ export default function findOptimalSchedule(tasks: Array<Array<string>>, schedul
 }
 
 function countTotalTime(tasks: Array<Array<string>>, shiftEnd: number){
-    const time = tasks.reduce((acc: number, currentValue) => {
+    return tasks.reduce((acc: number, currentValue) => {
         if (new Date(currentValue[0]).getTime() < shiftEnd) {
             return acc + new Date(currentValue[1]).getTime() - new Date(currentValue[0]).getTime()
         }
         return acc
     }, 0)
-
-    return time
 }
 
 function isScheduleRestrictions(task: task, startTime: number, endTime: number){

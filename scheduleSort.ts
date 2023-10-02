@@ -6,7 +6,6 @@ interface task {
 export default function findOptimalSchedule(tasks: Array<Array<string>>, schedule : Array<string>){
     const startTime = new Date(schedule[0]).getTime()
     const endTime = new Date(schedule[1]).getTime()
-    const totalTime = endTime - startTime
 
     const optimalSchedule = []
     tasks.sort()

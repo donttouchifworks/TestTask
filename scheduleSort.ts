@@ -52,8 +52,8 @@ export default function findOptimalSchedule(tasks: Array<Array<string>>, schedul
         } else {
             const a = tasks.slice(i)
             a.splice(1, 1)
-            const first = countTotalTime(a, endTime, totalTime)
-            const second = countTotalTime(tasks.slice(i + 1), endTime, totalTime)
+            const first = countTotalTime(a, endTime)
+            const second = countTotalTime(tasks.slice(i + 1), endTime)
             if(first > second) optimalSchedule.push(tasks[i])
         }
 
@@ -62,7 +62,7 @@ export default function findOptimalSchedule(tasks: Array<Array<string>>, schedul
     return optimalSchedule
 }
 
-function countTotalTime(tasks: Array<Array<string>>, shiftEnd: number, total: number){
+function countTotalTime(tasks: Array<Array<string>>, shiftEnd: number){
     const time = tasks.reduce((acc: number, currentValue) => {
         if (new Date(currentValue[0]).getTime() < shiftEnd) {
             return acc + new Date(currentValue[1]).getTime() - new Date(currentValue[0]).getTime()
